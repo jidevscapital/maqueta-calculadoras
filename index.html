@@ -69,8 +69,8 @@
 
   .botones { display: flex; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
   .pbtn { font: inherit; font-weight: 800; font-size: 15px; color: #fff; border: 0; padding: 12px 22px; border-radius: 999px; cursor: pointer; box-shadow: 0 10px 22px -10px rgba(0,0,0,.6); }
-  .pbtn.warm { background: linear-gradient(135deg, #f6d365, #fda085); }
-  .pbtn.cool { background: linear-gradient(135deg, #2dd4bf, #38a3d8); }
+  .pbtn.warm { background: linear-gradient(135deg, #f7d56a, #e0a82e); color: #2a1d00; }
+  .pbtn.cool { background: linear-gradient(135deg, #00e0b4, #00c98a); color: #04170d; }
   .pbtn.ghost { background: rgba(255,255,255,.06); border: 1px solid var(--line); box-shadow: none; }
   .pbtn:hover { filter: brightness(1.1); }
 
@@ -113,13 +113,58 @@
   .pos { color: var(--primary); } .neg { color: var(--red); }
   .banner { margin-top: 26px; font-size: 12px; color: var(--muted); text-align: center; }
   .chip { display: inline-block; font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 999px; }
-  .chip.down { background: rgba(56,189,248,.12); color: #7dd3fc; }
-  .chip.up { background: rgba(245,197,66,.12); color: #fcd34d; }
+  .chip.down { background: rgba(0,224,138,.12); color: #5cf0b4; }
+  .chip.up { background: rgba(245,197,66,.14); color: #f5c542; }
   .gitem { display: flex; align-items: center; gap: 8px; padding: 8px 10px; margin-top: 8px; border: 1px solid var(--line); border-radius: 12px; font-size: 12.5px; }
   .gitem b { font-family: var(--font-mono); }
   .gitem span { flex: 1; color: var(--muted); }
   .gitem button { font: inherit; font-size: 12px; font-weight: 700; border: 0; background: rgba(255,255,255,.06); color: var(--fg); padding: 5px 10px; border-radius: 8px; cursor: pointer; }
   .gitem button.del { color: var(--red); }
+
+  .subtabs.inner { margin-bottom: 18px; background: hsl(var(--card) / .35); }
+  .subtabs.inner button { padding: 8px 16px; font-size: 13.5px; }
+  .hint2 { color: var(--muted); font-size: 14px; margin: 14px 0 0; }
+  .f { margin-top: 16px; min-width: 0; }
+  .f label { display: block; margin-bottom: 8px; font-size: 15px; font-weight: 600; }
+  .f input { width: 100%; background: var(--input); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; font: 600 16px var(--font-mono); outline: none; }
+  .f input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,224,138,.16); }
+  .suf { display: flex; }
+  .suf input { border-top-right-radius: 0; border-bottom-right-radius: 0; flex: 1; min-width: 0; }
+  .suf span { display: grid; place-items: center; padding: 0 16px; background: rgba(255,255,255,.06); border: 1px solid var(--line); border-left: 0; border-radius: 0 14px 14px 0; color: var(--muted); font-weight: 700; }
+  .gpgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0 22px; margin-bottom: 22px; }
+  .tablawrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; margin-top: 6px; }
+  .tabla { width: 100%; border-collapse: collapse; min-width: 520px; }
+  .tabla th, .tabla td { padding: 13px 16px; text-align: left; border-bottom: 1px solid var(--line); font-size: 14.5px; }
+  .tabla th { background: rgba(255,255,255,.05); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .tabla tr:last-child td { border-bottom: 0; }
+  .tabla .r { text-align: right; }
+  .tabla td.v { font: 700 15px var(--font-mono); text-align: right; white-space: nowrap; }
+  .tabla td.c { font: 500 13.5px var(--font-mono); color: var(--muted); }
+  .tabla tr.tot td { background: rgba(0,224,138,.07); font-weight: 800; }
+  .tabla tr.tot.perd td { background: rgba(224,51,76,.10); }
+  .plgrid { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 34px; margin-top: 4px; }
+  @media (max-width: 960px) { .plgrid { grid-template-columns: minmax(0, 1fr); } }
+  .resbox { margin-top: 22px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .resbox div { display: flex; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); font-size: 15px; }
+  .resbox div:last-child { border-bottom: 0; }
+  .resbox b { font: 700 17px var(--font-mono); }
+  .resbox .big b { color: var(--primary); font-size: 20px; }
+  .leyenda { display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: center; font-size: 13px; color: var(--muted); margin-top: 10px; }
+  .leyenda i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+  .plmeta { margin-top: 28px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.03); }
+  .plmeta h3 { margin: 0 0 4px; font-size: 16px; }
+  .plmeta .dos { max-width: 320px; }
+  svg text { font-family: var(--font-sans); }
+  /* Anillo de reparto: reemplaza la barra larga */
+  .anillo-wrap { display: flex; flex-wrap: wrap; gap: 26px 34px; align-items: center; }
+  .anillo { width: 240px; max-width: 100%; flex: none; }
+  .anillo svg { width: 100%; display: block; filter: drop-shadow(0 14px 18px rgba(0,0,0,.55)); }
+  .reparto { flex: 1; min-width: 240px; display: grid; gap: 10px; }
+  .rep { display: grid; grid-template-columns: 12px 1fr auto; gap: 2px 12px; align-items: center; padding: 10px 14px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.03); }
+  .rep i { width: 12px; height: 12px; border-radius: 4px; grid-row: 1 / span 2; }
+  .rep b { font-size: 14px; }
+  .rep span { grid-column: 2; color: var(--muted); font: 500 12.5px var(--font-mono); }
+  .rep em { grid-column: 3; grid-row: 1 / span 2; font: 700 14px var(--font-mono); font-style: normal; text-align: right; }
   [hidden] { display: none !important; }
 </style>
 </head>
@@ -150,6 +195,7 @@
   <div class="subtabs glass" role="tablist">
     <button id="t-op" onclick="ver('op')">Opciones</button>
     <button id="t-ac" class="on" onclick="ver('ac')">Activos</button>
+    <button id="t-pl" onclick="ver('pl')">Planifica tu legado</button>
   </div>
 
   <section id="v-op" hidden>
@@ -158,6 +204,11 @@
   </section>
 
   <section id="v-ac">
+    <div class="subtabs glass inner" role="tablist">
+      <button id="a-t-prom" class="on" onclick="verA('prom')">Precio promedio</button>
+      <button id="a-t-gp" onclick="verA('gp')">Ganancia o pérdida</button>
+    </div>
+    <div id="a-prom">
     <!-- CALCULADORA BASE: igual a la de referencia (dos compras, monto, totales, botones, barra) -->
     <div class="glass calc">
       <h2>Calculadora de precio promedio de acciones</h2>
@@ -185,8 +236,8 @@
       <p>Opcionales: la calculadora de arriba funciona sola. Aquí sumamos lo que la de referencia no tiene.</p>
       <div class="xgrid">
         <div class="glass xcard">
-          <h3>Ganancia o pérdida</h3>
-          <p class="hint">Con el precio actual y tus comisiones.</p>
+          <h3>Resultado con el precio actual</h3>
+          <p class="hint">Cuánto llevas ganado o perdido hoy, con tus comisiones.</p>
           <div class="dos">
             <div><label>Precio actual</label><input id="actual" type="number" step="0.01" min="0" placeholder="0.00"></div>
             <div><label>Comisión por operación</label><input id="fee" type="number" step="0.01" min="0" placeholder="0.00"></div>
@@ -262,13 +313,74 @@
         </div>
       </div>
     </div>
+    </div><!-- /a-prom -->
+
+    <div id="a-gp" hidden>
+      <div class="glass calc">
+        <h2>Calculadora de ganancia o pérdida</h2>
+        <p class="hint2">Pon lo que tienes, a cuánto compraste y a cuánto vendes. Ves el resultado de la venta y de lo que conservas.</p>
+        <div class="gpgrid">
+          <div class="f"><label for="gpN">Acciones que tienes</label><input id="gpN" type="number" min="0" step="1" value="100"></div>
+          <div class="f"><label for="gpC">Precio de compra</label><input id="gpC" type="number" min="0" step="0.01" value="300"></div>
+          <div class="f"><label for="gpV">Precio de venta</label><input id="gpV" type="number" min="0" step="0.01" value="310"></div>
+          <div class="f"><label for="gpS">Acciones que vas a vender</label><input id="gpS" type="number" min="0" step="1" value="10"></div>
+          <div class="f"><label for="gpF">Comisión total (opcional)</label><input id="gpF" type="number" min="0" step="0.01" placeholder="0.00"></div>
+        </div>
+        <div class="tablawrap"><table class="tabla">
+          <thead><tr><th>Descripción</th><th>Cálculo</th><th class="r">Valor</th></tr></thead>
+          <tbody id="gpRows"></tbody>
+        </table></div>
+        <div class="botones">
+          <button class="pbtn warm" onclick="gpLimpiar()">Limpiar</button>
+          <button class="pbtn cool" onclick="gpCalc(true)">Calcular</button>
+        </div>
+        <div class="grafico" id="gpBar"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="v-pl" hidden>
+    <div class="glass calc">
+      <h2>Planifica tu legado</h2>
+      <p class="hint2">Mira cuánto puede crecer tu dinero si aportas cada mes y subes tu aporte cada año.</p>
+      <div class="plgrid">
+        <div>
+          <div class="f"><label for="plP">Aporte mensual ($)</label><input id="plP" type="number" min="0" step="1" value="1500"></div>
+          <div class="f"><label for="plY">Tiempo</label><div class="suf"><input id="plY" type="number" min="1" max="60" step="1" value="2"><span>años</span></div></div>
+          <div class="f"><label for="plR">Rendimiento anual esperado</label><div class="suf"><input id="plR" type="number" min="0" step="0.1" value="3"><span>%</span></div></div>
+          <div class="f"><label for="plS">Aumento anual de tu aporte</label><div class="suf"><input id="plS" type="number" min="0" step="0.1" value="2"><span>%</span></div></div>
+          <div class="f"><label for="plI">Aporte inicial ($, opcional)</label><input id="plI" type="number" min="0" step="1" placeholder="0"></div>
+          <div class="resbox" id="plRes"></div>
+          <div class="botones">
+            <button class="pbtn warm" onclick="plLimpiar()">Limpiar</button>
+            <button class="pbtn cool" onclick="plCalc(true)">Calcular</button>
+          </div>
+        </div>
+        <div>
+          <div id="plDonut"></div>
+          <div id="plLine" style="margin-top:18px"></div>
+        </div>
+      </div>
+
+      <div class="plmeta">
+        <h3>¿Cuánto aportar para llegar a mi meta?</h3>
+        <div class="dos"><div class="f"><label for="plM">Meta ($)</label><input id="plM" type="number" min="0" step="100" placeholder="100000"></div></div>
+        <div id="plMetaOut"></div>
+      </div>
+
+      <h3 style="margin:26px 0 10px;font-size:16px">Año por año</h3>
+      <div class="tablawrap"><table class="tabla">
+        <thead><tr><th>Año</th><th class="r">Aporte mensual</th><th class="r">Total invertido</th><th class="r">Valor</th><th class="r">Ganancia</th></tr></thead>
+        <tbody id="plRows"></tbody>
+      </table></div>
+    </div>
   </section>
 
   <p class="banner">Maqueta para aprobación. Es una vista previa: todavía no está en la plataforma real.</p>
 </div>
 
 <script>
-  const COLORES = ['#7fc67f', '#66b3f5', '#c4a6f2', '#f5d36a', '#f59fb0', '#6fd6c3'];
+  const COLORES = ['#00e08a', '#f5c542', '#e0334c', '#00b3a4', '#ffd97a', '#ff7a8a'];
   const ORD = ['Primera', 'Segunda', 'Tercera', 'Cuarta', 'Quinta', 'Sexta'];
   const ORD_ABREV = ['1ª', '2ª', '3ª', '4ª', '5ª', '6ª'];
   const MAX = 6;
@@ -280,7 +392,8 @@
   const usd = (n) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const sg = (n) => (n >= 0 ? '+' : '−') + usd(Math.abs(n));
 
-  function ver(c) { $('v-op').hidden = c !== 'op'; $('v-ac').hidden = c !== 'ac'; $('t-op').classList.toggle('on', c === 'op'); $('t-ac').classList.toggle('on', c === 'ac'); }
+  function ver(c) { ['op', 'ac', 'pl'].forEach(k => { $('v-' + k).hidden = c !== k; $('t-' + k).classList.toggle('on', c === k); }); }
+  function verA(c) { ['prom', 'gp'].forEach(k => { $('a-' + k).hidden = c !== k; $('a-t-' + k).classList.toggle('on', c === k); }); }
 
   // Se pintan solo al agregar o quitar, para no perder el foco mientras se escribe
   function pintar() {
@@ -322,10 +435,8 @@
       else if (ult.p > pa) t = `<span class="chip up">▲ Promediando al alza (pirámide) · tu última compra está ${d.toFixed(1)}% sobre el promedio anterior</span>`;
     }
     $('tendencia').innerHTML = t;
-    $('grafico').innerHTML = `
-      <div class="llaves">${validas.map(c => `<div class="llave" style="flex:${c.u * c.p / gastado} 1 0"><span>${fmt(c.u)} unidades</span></div>`).join('')}</div>
-      <div class="barra">${validas.map(c => `<i style="flex:${c.u * c.p / gastado} 1 0;background-color:${COLORES[c.i % COLORES.length]}"><span style="position:relative;z-index:1">${fmt(c.u * c.p)}</span></i>`).join('')}</div>
-      <div class="llave base"><span>Precio promedio ${fmt(prom)}</span></div>`;
+    $('grafico').innerHTML = `<div class="anillo-wrap"><div class="anillo">${anillo(validas.map(c => ({ v: c.u * c.p, color: COLORES[c.i % COLORES.length] })), 'PRECIO PROMEDIO', fmt(prom), fmt(acc) + ' unidades')}</div>
+      <div class="reparto">${validas.map(c => `<div class="rep"><i style="background:${COLORES[c.i % COLORES.length]}"></i><b>${ORD[c.i]} compra</b><span>${fmt(c.u)} × ${fmt(c.p)}</span><em>${fmt(c.u * c.p)} · ${(c.u * c.p / gastado * 100).toFixed(1)}%</em></div>`).join('')}</div></div>`;
     extras(acc, gastado, validas.length);
     if (destacar) { $('tProm').animate([{ transform: 'scale(1.25)' }, { transform: 'scale(1)' }], { duration: 260 }); }
   }
@@ -427,6 +538,107 @@
 
   ['actual', 'fee', 'meta', 'sUn', 'sPr', 'vPrecio', 'vGan', 'pCap', 'pRiesgo', 'pEntrada', 'pStop', 'rStop', 'rObj'].forEach(id => $(id).addEventListener('input', () => calcular()));
   pintar(); listar();
+
+  // ===== ANILLO DE REPARTO =====
+  function anillo(segs, titulo, valor, sub, colorValor) {
+    const R = 78, C = 2 * Math.PI * R, tot = segs.reduce((a, x) => a + x.v, 0) || 1, gap = segs.length > 1 ? 5 : 0;
+    let acc = 0;
+    const arcos = segs.map(x => { const len = C * x.v / tot, d = Math.max(len - gap, 0.5);
+      const a = `<circle cx="110" cy="110" r="${R}" fill="none" stroke="${x.color}" stroke-width="26" stroke-dasharray="${d} ${C - d}" stroke-dashoffset="${-acc}" transform="rotate(-90 110 110)"/>`; acc += len; return a; }).join('');
+    return `<svg viewBox="0 0 220 220" role="img" aria-label="${titulo} ${valor}">
+      <circle cx="110" cy="110" r="${R}" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="26"/>${arcos}
+      <text x="110" y="${sub ? 98 : 104}" text-anchor="middle" style="fill:#8ea2bd;font-size:10.5px;font-weight:800;letter-spacing:.08em">${titulo}</text>
+      <text x="110" y="${sub ? 128 : 134}" text-anchor="middle" style="fill:${colorValor || '#00e08a'};font-size:27px;font-weight:800;font-family:JetBrains Mono,monospace">${valor}</text>
+      ${sub ? `<text x="110" y="148" text-anchor="middle" style="fill:#8ea2bd;font-size:11.5px">${sub}</text>` : ''}</svg>`;
+  }
+
+  // ===== GANANCIA O PÉRDIDA =====
+  function gpCalc(destacar) {
+    const n = num($('gpN').value), c = num($('gpC').value), v = num($('gpV').value), sv = num($('gpS').value), fee = num($('gpF').value);
+    const tb = $('gpRows');
+    if (!n || !c || !v) { tb.innerHTML = '<tr><td colspan="3" style="color:var(--muted);text-align:center;padding:26px">Escribe cuántas acciones tienes y los precios de compra y venta.</td></tr>'; $('gpBar').innerHTML = ''; return; }
+    if (sv > n) { tb.innerHTML = '<tr><td colspan="3"><div class="out warn" style="margin:6px 0">No puedes vender más acciones de las que tienes (' + fmt(n) + ').</div></td></tr>'; $('gpBar').innerHTML = ''; return; }
+    const quedan = n - sv, porAccion = v - c, realizada = sv * porAccion - fee, noReal = quedan * porAccion, total = n * porAccion - fee;
+    const fila = (d, calc, val, cls) => `<tr><td>${d}</td><td class="c">${calc}</td><td class="v ${cls || ''}">${val}</td></tr>`;
+    const col = (x) => x >= 0 ? 'pos' : 'neg';
+    let h = fila('Valor de compra inicial', `${fmt(n)} × ${fmt(c)}`, usd(n * c))
+      + fila('Valor actual de tus acciones', `${fmt(n)} × ${fmt(v)}`, usd(n * v))
+      + fila('Valor de esta venta', `${fmt(sv)} × ${fmt(v)}`, usd(sv * v))
+      + fila('Valor de las acciones que conservas', `${fmt(quedan)} × ${fmt(v)}`, usd(quedan * v));
+    if (fee) h += fila('Comisión', '', '−' + usd(fee), 'neg');
+    h += `<tr class="tot ${realizada >= 0 ? '' : 'perd'}"><td>${realizada >= 0 ? 'Ganancia' : 'Pérdida'} de esta venta</td><td class="c" style="color:inherit">${fmt(sv)} × ${fmt(porAccion)}${fee ? ' − ' + fmt(fee) : ''} = ${fmt(realizada)}</td><td class="v ${col(realizada)}">${sg(realizada)}</td></tr>`;
+    h += fila('Retorno de esta venta', `${fmt(v)} ÷ ${fmt(c)} − 1`, `${porAccion >= 0 ? '+' : '−'}${Math.abs(porAccion / c * 100).toFixed(2)}%`, col(porAccion));
+    h += fila('Ganancia o pérdida en lo que conservas', `${fmt(quedan)} × ${fmt(porAccion)}`, sg(noReal), col(noReal));
+    h += fila('Resultado total de tu posición', '', sg(total), col(total));
+    tb.innerHTML = h;
+    const segs = [{ v: sv, color: '#f5c542' }, { v: quedan, color: '#00e08a' }].filter(x => x.v > 0);
+    $('gpBar').innerHTML = `<div class="anillo-wrap"><div class="anillo">${anillo(segs, realizada >= 0 ? 'GANANCIA DE LA VENTA' : 'PÉRDIDA DE LA VENTA', sg(realizada), fmt(sv) + ' de ' + fmt(n) + ' acciones', realizada >= 0 ? '#00e08a' : '#e0334c')}</div>
+      <div class="reparto">
+        <div class="rep"><i style="background:#f5c542"></i><b>Vendes</b><span>${fmt(sv)} × ${fmt(v)}</span><em>${usd(sv * v)}</em></div>
+        <div class="rep"><i style="background:#00e08a"></i><b>Conservas</b><span>${fmt(quedan)} × ${fmt(v)}</span><em>${usd(quedan * v)}</em></div>
+      </div></div>`;
+    if (destacar) { tb.animate([{ opacity: .3 }, { opacity: 1 }], { duration: 260 }); }
+  }
+  function gpLimpiar() { ['gpN', 'gpC', 'gpV', 'gpS', 'gpF'].forEach(id => $(id).value = ''); gpCalc(); }
+
+  // ===== PLANIFICA TU LEGADO =====
+  // Aporte al inicio de cada mes, tasa mensual = anual / 12, el aporte sube cada año.
+  function plSim(P0, anios, ann, paso, ini) {
+    const r = ann / 100 / 12; let bal = ini, inv = ini; const filas = [{ y: 0, P: P0, inv: ini, bal: ini }];
+    for (let y = 0; y < anios; y++) {
+      const P = P0 * Math.pow(1 + paso / 100, y);
+      for (let m = 0; m < 12; m++) { bal = (bal + P) * (1 + r); inv += P; }
+      filas.push({ y: y + 1, P, inv, bal });
+    }
+    return { bal, inv, filas };
+  }
+  const corto = (n) => n >= 1e6 ? '$' + (n / 1e6).toFixed(1) + 'M' : n >= 1e3 ? '$' + (n / 1e3).toFixed(n >= 1e4 ? 0 : 1) + 'k' : '$' + Math.round(n);
+  function plCalc(destacar) {
+    const P0 = num($('plP').value), anios = Math.min(60, Math.max(0, Math.floor(num($('plY').value)))), ann = num($('plR').value), paso = num($('plS').value), ini = num($('plI').value);
+    if (!(P0 || ini) || !anios) {
+      $('plRes').innerHTML = ''; $('plDonut').innerHTML = '<div style="color:var(--muted);text-align:center;padding:40px 10px">Escribe tu aporte mensual y el tiempo para ver tu plan.</div>';
+      $('plLine').innerHTML = ''; $('plRows').innerHTML = ''; $('plMetaOut').innerHTML = ''; return;
+    }
+    const { bal, inv, filas } = plSim(P0, anios, ann, paso, ini), gan = bal - inv;
+    $('plRes').innerHTML = `<div class="big"><span>Monto esperado</span><b>${usd(bal)}</b></div><div><span>Total invertido</span><b>${usd(inv)}</b></div><div><span>Ganancia total</span><b class="${gan >= 0 ? 'pos' : 'neg'}">${usd(gan)}</b></div>`;
+
+    const fi = Math.max(0, Math.min(1, inv / bal));
+    $('plDonut').innerHTML = `<div class="anillo-wrap" style="justify-content:center"><div class="anillo">${anillo([{ v: inv, color: '#f5c542' }, { v: Math.max(gan, 0), color: '#00e08a' }].filter(x => x.v > 0), 'MONTO ESPERADO', corto(bal))}</div>
+      <div class="reparto" style="max-width:280px">
+        <div class="rep"><i style="background:#f5c542"></i><b>Lo que pones tú</b><span>${usd(inv)}</span><em>${(fi * 100).toFixed(1)}%</em></div>
+        <div class="rep"><i style="background:#00e08a"></i><b>Lo que genera</b><span>${usd(Math.max(gan, 0))}</span><em>${((1 - fi) * 100).toFixed(1)}%</em></div>
+      </div></div>`;
+
+    const W = 560, H = 230, L = 54, Rr = 14, T = 14, B = 30, mx = Math.max(bal, inv) || 1;
+    const X = (y) => L + (W - L - Rr) * (anios ? y / anios : 0), Y = (v) => T + (H - T - B) * (1 - v / mx);
+    const pts = (k) => filas.map(f => `${X(f.y).toFixed(1)},${Y(f[k]).toFixed(1)}`).join(' ');
+    const area = `${X(0)},${Y(0)} ${pts('bal')} ${X(anios)},${Y(0)}`;
+    const marcas = [0, .5, 1].map(t => `<line x1="${L}" x2="${W - Rr}" y1="${Y(mx * t).toFixed(1)}" y2="${Y(mx * t).toFixed(1)}" stroke="rgba(255,255,255,.08)"/><text x="${L - 8}" y="${(Y(mx * t) + 4).toFixed(1)}" text-anchor="end" style="fill:#8ea2bd;font-size:11px">${corto(mx * t)}</text>`).join('');
+    const xs = [...new Set([0, Math.round(anios / 2), anios])].map(y => `<text x="${X(y).toFixed(1)}" y="${H - 8}" text-anchor="middle" style="fill:#8ea2bd;font-size:11px">Año ${y}</text>`).join('');
+    $('plLine').innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block" role="img" aria-label="Crecimiento de tu dinero año por año">${marcas}
+      <polygon points="${area}" fill="rgba(0,224,138,.14)"/>
+      <polyline points="${pts('inv')}" fill="none" stroke="#f5c542" stroke-width="2.5" stroke-dasharray="6 5"/>
+      <polyline points="${pts('bal')}" fill="none" stroke="#00e08a" stroke-width="3"/>
+      <circle cx="${X(anios).toFixed(1)}" cy="${Y(bal).toFixed(1)}" r="5" fill="#00e08a"/>${xs}</svg>
+      <div class="leyenda"><span><i style="background:#00e08a"></i>Valor de tu plan</span><span><i style="background:#f5c542"></i>Lo que has puesto</span></div>`;
+
+    $('plRows').innerHTML = filas.slice(1).map(f => `<tr><td>${f.y}</td><td class="v">${usd(f.P)}</td><td class="v">${usd(f.inv)}</td><td class="v">${usd(f.bal)}</td><td class="v ${f.bal - f.inv >= 0 ? 'pos' : 'neg'}">${usd(f.bal - f.inv)}</td></tr>`).join('');
+
+    const meta = num($('plM').value);
+    if (!meta) $('plMetaOut').innerHTML = '';
+    else {
+      const baseIni = plSim(0, anios, ann, paso, ini).bal, unit = plSim(1, anios, ann, paso, 0).bal;
+      if (meta <= baseIni) $('plMetaOut').innerHTML = `<div class="out">Con tu aporte inicial ya llegas a esa meta.</div>`;
+      else { const need = (meta - baseIni) / unit;
+        $('plMetaOut').innerHTML = `<div class="out">Para llegar a <b>${usd(meta)}</b> en ${anios} ${anios === 1 ? 'año' : 'años'} necesitas aportar <b>${usd(need)}</b> al mes${paso ? ' (subiendo ' + paso + '% cada año)' : ''}.</div>`; }
+    }
+    if (destacar) $('plRes').animate([{ opacity: .3 }, { opacity: 1 }], { duration: 260 });
+  }
+  function plLimpiar() { ['plP', 'plY', 'plR', 'plS', 'plI', 'plM'].forEach(id => $(id).value = ''); plCalc(); }
+  document.querySelectorAll('#a-gp input').forEach(e => e.addEventListener('input', () => gpCalc()));
+  document.querySelectorAll('#v-pl input').forEach(e => e.addEventListener('input', () => plCalc()));
+  gpCalc(); plCalc();
+
 </script>
 </body>
 </html>
