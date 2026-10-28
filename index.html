@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maqueta Calculadoras LOC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060b16; --fg: #eaf1fa; --muted: #8ea2bd;
+    --card: 219 52% 13%; --line: rgba(255,255,255,.09);
+    --primary: #00e08a; --red: #f87171; --input: #0b1426;
+    color-scheme: dark; --font-sans: Manrope, Inter, system-ui, sans-serif; --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); position: relative; overflow-x: hidden; }
+  body::before, body::after { content: ""; position: fixed; width: 640px; height: 640px; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; }
+  body::before { top: -220px; left: -160px; background: rgba(0,224,138,.10); }
+  body::after { bottom: -240px; right: -180px; background: rgba(59,130,246,.10); }
+  .wrap { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding-block: 18px 60px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+  .glass { background: hsl(var(--card) / .5); border: 1px solid var(--line); border-radius: 24px;
+    box-shadow: 0 22px 54px -20px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.07); backdrop-filter: blur(22px) saturate(1.3); }
+  .glass-nav { background: rgba(6,11,22,.6); border: 1px solid var(--line); border-radius: 24px;
+    box-shadow: 0 22px 54px -20px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.07); backdrop-filter: blur(26px) saturate(1.4); }
+
+  nav.top { display: flex; align-items: center; gap: 18px; padding: 14px 20px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 14px; letter-spacing: .02em; white-space: nowrap; }
+  .brand .logo { width: 44px; height: 44px; border-radius: 50%; background: conic-gradient(from 200deg, #e0334c, #00e08a, #e0334c); display: grid; place-items: center; }
+  .brand .logo i { width: 30px; height: 30px; border-radius: 50%; background: #0b1526; display: block; }
+  .brand b { color: #f5c542; }
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+  .tab { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 14px; font-weight: 700; font-size: 14px; color: #cfd9e8; }
+  .tab.active { color: #04170d; background: linear-gradient(135deg, #00e0b4, #00c98a); box-shadow: 0 10px 28px -10px rgba(0,224,160,.7); }
+  .tab svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .avatar { width: 46px; height: 46px; border-radius: 16px; background: linear-gradient(135deg, #00e0b4, #00c98a); color: #04170d; font-weight: 800; display: grid; place-items: center; }
+
+  .pill { display: inline-flex; align-items: center; border-radius: 999px; padding: .25rem .65rem; background: rgba(0,224,138,.13); color: var(--primary); font-size: 11.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+  h1 { font-size: 40px; line-height: 1.1; margin: 14px 0 6px; font-weight: 800; letter-spacing: -.02em; }
+  .sub { color: var(--muted); margin: 0 0 22px; font-size: 16px; }
+  @media (max-width: 720px) { h1 { font-size: 32px; } }
+
+  .subtabs { display: inline-flex; gap: 6px; padding: 6px; margin-bottom: 20px; border-radius: 18px; }
+  .subtabs button { font: inherit; font-weight: 700; font-size: 14px; color: #cfd9e8; background: transparent; border: 0; padding: 10px 20px; border-radius: 14px; cursor: pointer; }
+  .subtabs button.on { background: linear-gradient(135deg, #00e0b4, #00c98a); color: #04170d; box-shadow: 0 10px 28px -10px rgba(0,224,160,.7); }
+
+  /* ===== LA CALCULADORA: mismo orden que la de referencia ===== */
+  .calc { padding: 26px 28px 30px; }
+  .calc > h2 { margin: 0; font-size: 22px; font-weight: 800; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .compras { display: flex; flex-wrap: wrap; gap: 34px 44px; margin-top: 24px; }
+  .compra { width: 290px; max-width: 100%; position: relative; }
+  .compra h3 { margin: 0; font-size: 22px; font-weight: 700; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .compra .quitar { position: absolute; right: 0; top: 2px; border: 0; background: transparent; color: var(--muted); font-size: 22px; cursor: pointer; line-height: 1; }
+  .compra .quitar:hover { color: var(--red); }
+  .compra label { display: block; margin: 18px 0 8px; font-size: 16px; font-weight: 600; }
+  .compra input { width: 100%; background: var(--input); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 13px 16px; font: 600 16px var(--font-mono); outline: none; }
+  .compra input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,224,138,.16); }
+  .compra .monto { margin-top: 12px; padding-top: 8px; border-top: 2px solid #2f8f4e; font-size: 12px; font-weight: 700; color: #34d399; display: flex; justify-content: space-between; align-items: baseline; }
+  .compra .monto b { font: 700 16px var(--font-mono); }
+
+  .totales { margin-top: 28px; display: grid; gap: 14px; }
+  .totales div { display: flex; align-items: baseline; gap: 22px; }
+  .totales span { width: 130px; font-size: 14px; font-weight: 700; color: #34d399; }
+  .totales b { font: 700 24px var(--font-mono); }
+  .totales .prom b { color: var(--primary); }
+
+  .botones { display: flex; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
+  .pbtn { font: inherit; font-weight: 800; font-size: 15px; color: #fff; border: 0; padding: 12px 22px; border-radius: 999px; cursor: pointer; box-shadow: 0 10px 22px -10px rgba(0,0,0,.6); }
+  .pbtn.warm { background: linear-gradient(135deg, #f6d365, #fda085); }
+  .pbtn.cool { background: linear-gradient(135deg, #2dd4bf, #38a3d8); }
+  .pbtn.ghost { background: rgba(255,255,255,.06); border: 1px solid var(--line); box-shadow: none; }
+  .pbtn:hover { filter: brightness(1.1); }
+
+  /* Barra proporcional con llaves: unidades arriba, precio promedio abajo */
+  .grafico { margin-top: 34px; }
+  .llaves { display: flex; padding: 0 4px; gap: 4px; }
+  .llave { text-align: center; color: #f87171; font-size: 13px; font-weight: 800; position: relative; height: 22px; border-top: 1px solid var(--muted); margin-top: 8px; min-width: 0; }
+  .llave::before, .llave::after { content: ""; position: absolute; top: -1px; width: 1px; height: 12px; background: var(--muted); }
+  .llave::before { left: 0; } .llave::after { right: 0; }
+  .llave span { position: relative; top: -10px; background: #0d1830; padding: 0 8px; white-space: nowrap; }
+  /* Barra con relieve: bisel de luz arriba, sombra abajo y brillo de cristal en cada tramo */
+  .barra { display: flex; height: 60px; border-radius: 18px; overflow: hidden; margin: 8px 0; padding: 4px; gap: 4px;
+    background: rgba(0,0,0,.35);
+    box-shadow: inset 0 3px 8px rgba(0,0,0,.65), inset 0 -1px 0 rgba(255,255,255,.08), 0 16px 30px -14px rgba(0,0,0,.8); }
+  .barra i { display: grid; place-items: center; font: 800 16px var(--font-mono); color: #04170d; font-style: normal; min-width: 0; overflow: hidden;
+    border-radius: 14px; position: relative; transition: width .35s ease;
+    background-image: linear-gradient(180deg, rgba(255,255,255,.42) 0%, rgba(255,255,255,.08) 46%, rgba(0,0,0,.16) 100%);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,.55), inset 0 -4px 8px rgba(0,0,0,.28), 0 6px 14px -6px rgba(0,0,0,.7); }
+  .barra i::after { content: ""; position: absolute; left: 8%; right: 8%; top: 4px; height: 38%; border-radius: 10px; background: linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0)); pointer-events: none; }
+  .llave.base { border-top: 0; border-bottom: 1px solid var(--muted); margin: 0; }
+  .llave.base::before, .llave.base::after { top: auto; bottom: -1px; }
+  .llave.base span { top: 10px; }
+
+  /* ===== MEJORAS: aparte, para no ensuciar la calculadora base ===== */
+  .extras { margin-top: 26px; }
+  .extras h2 { font-size: 20px; margin: 0 0 4px; }
+  .extras > p { color: var(--muted); font-size: 14px; margin: 0 0 18px; }
+  .xgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 960px) { .xgrid { grid-template-columns: 1fr; } }
+  .xcard { padding: 20px; border-radius: 20px; }
+  .xcard h3 { margin: 0 0 4px; font-size: 16px; }
+  .xcard .hint { color: var(--muted); font-size: 12.5px; margin: 0 0 14px; }
+  .xcard label { display: block; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 10px 0 5px; }
+  .xcard input { width: 100%; background: var(--input); color: var(--fg); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font: 500 14px var(--font-mono); outline: none; }
+  .xcard input:focus { border-color: var(--primary); }
+  .dos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .out { margin-top: 14px; font-size: 13px; padding: 11px 13px; border-radius: 12px; background: rgba(0,224,138,.08); border: 1px solid rgba(0,224,138,.25); color: #b9f5da; line-height: 1.5; }
+  .out.warn { background: rgba(248,113,113,.08); border-color: rgba(248,113,113,.3); color: #fecaca; }
+  .out b { font-family: var(--font-mono); }
+  .pos { color: var(--primary); } .neg { color: var(--red); }
+  .banner { margin-top: 26px; font-size: 12px; color: var(--muted); text-align: center; }
+  .chip { display: inline-block; font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 999px; }
+  .chip.down { background: rgba(56,189,248,.12); color: #7dd3fc; }
+  .chip.up { background: rgba(245,197,66,.12); color: #fcd34d; }
+  .gitem { display: flex; align-items: center; gap: 8px; padding: 8px 10px; margin-top: 8px; border: 1px solid var(--line); border-radius: 12px; font-size: 12.5px; }
+  .gitem b { font-family: var(--font-mono); }
+  .gitem span { flex: 1; color: var(--muted); }
+  .gitem button { font: inherit; font-size: 12px; font-weight: 700; border: 0; background: rgba(255,255,255,.06); color: var(--fg); padding: 5px 10px; border-radius: 8px; cursor: pointer; }
+  .gitem button.del { color: var(--red); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="top glass-nav">
+    <div class="brand"><span class="logo"><i></i></span><span>LEGACY OPTION <b>COMUNIDAD</b></span></div>
+    <div class="tabs">
+      <span class="tab"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comunidad</span>
+      <span class="tab"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg>Empieza aqui</span>
+      <span class="tab"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>Programas</span>
+      <span class="tab"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4z"/></svg>En Vivo</span>
+      <span class="tab active"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01"/></svg>Calculadoras</span>
+      <span class="tab"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>Análisis</span>
+      <span class="tab"><svg viewBox="0 0 24 24"><path d="M4 4h12a2 2 0 0 1 2 2v14H6a2 2 0 0 1-2-2z"/><path d="M8 8h6"/></svg>Bitacora</span>
+      <span class="tab"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Calendario</span>
+    </div>
+    <span class="avatar">IR</span>
+  </nav>
+
+  <header style="margin-top:34px">
+    <span class="pill">Herramientas</span>
+    <h1>Calculadoras</h1>
+    <p class="sub">Calcula tu trade de opciones o el precio promedio de tus acciones, sin salir de la plataforma.</p>
+  </header>
+
+  <div class="subtabs glass" role="tablist">
+    <button id="t-op" onclick="ver('op')">Opciones</button>
+    <button id="t-ac" class="on" onclick="ver('ac')">Activos</button>
+  </div>
+
+  <section id="v-op" hidden>
+    <div class="glass calc"><h2>Calculadora de opciones</h2>
+      <p style="color:var(--muted)">Esta es la calculadora que ya existe en la plataforma. No se modifica: solo pasa a vivir en la sub-pestaña "Opciones".</p></div>
+  </section>
+
+  <section id="v-ac">
+    <!-- CALCULADORA BASE: igual a la de referencia (dos compras, monto, totales, botones, barra) -->
+    <div class="glass calc">
+      <h2>Calculadora de precio promedio de acciones</h2>
+      <div class="compras" id="compras"></div>
+
+      <div class="totales">
+        <div><span>Unidades totales</span><b id="tUn">0</b></div>
+        <div class="prom"><span>Precio promedio</span><b id="tProm">0</b></div>
+        <div><span>Monto total</span><b id="tMonto">0</b></div>
+      </div>
+      <div id="tendencia" style="margin-top:14px"></div>
+
+      <div class="botones">
+        <button class="pbtn warm" onclick="limpiar()">Limpiar</button>
+        <button class="pbtn cool" onclick="calcular(true)">Calcular promedio</button>
+        <button class="pbtn ghost" id="btnMas" onclick="agregar()">+ Agregar compra</button>
+      </div>
+
+      <div class="grafico" id="grafico"></div>
+    </div>
+
+    <!-- MEJORAS: bloque aparte -->
+    <div class="extras">
+      <h2>Más herramientas</h2>
+      <p>Opcionales: la calculadora de arriba funciona sola. Aquí sumamos lo que la de referencia no tiene.</p>
+      <div class="xgrid">
+        <div class="glass xcard">
+          <h3>Ganancia o pérdida</h3>
+          <p class="hint">Con el precio actual y tus comisiones.</p>
+          <div class="dos">
+            <div><label>Precio actual</label><input id="actual" type="number" step="0.01" min="0" placeholder="0.00"></div>
+            <div><label>Comisión por operación</label><input id="fee" type="number" step="0.01" min="0" placeholder="0.00"></div>
+          </div>
+          <div id="plOut"></div>
+        </div>
+        <div class="glass xcard">
+          <h3>Bajar tu promedio</h3>
+          <p class="hint">¿Cuántas acciones comprar al precio actual para llegar a un promedio objetivo?</p>
+          <label>Promedio objetivo</label><input id="meta" type="number" step="0.01" min="0" placeholder="0.00">
+          <div id="metaOut"></div>
+        </div>
+        <div class="glass xcard">
+          <h3>¿Y si compro más?</h3>
+          <p class="hint">Simula una compra extra sin tocar las tuyas.</p>
+          <div class="dos">
+            <div><label>Acciones</label><input id="sUn" type="number" min="0" placeholder="0"></div>
+            <div><label>Precio</label><input id="sPr" type="number" step="0.01" min="0" placeholder="0.00"></div>
+          </div>
+          <div id="simOut"></div>
+        </div>
+
+        <div class="glass xcard">
+          <h3>Venta parcial</h3>
+          <p class="hint">¿Cuántas acciones vender para recuperar lo invertido o asegurar una ganancia?</p>
+          <div class="dos">
+            <div><label>Precio de venta</label><input id="vPrecio" type="number" step="0.01" min="0" placeholder="0.00"></div>
+            <div><label>Ganancia a asegurar ($)</label><input id="vGan" type="number" step="0.01" min="0" placeholder="Opcional"></div>
+          </div>
+          <div id="ventaOut"></div>
+        </div>
+
+        <div class="glass xcard">
+          <h3>Tamaño de posición</h3>
+          <p class="hint">Cuántas acciones comprar según tu capital y lo que aceptas perder.</p>
+          <div class="dos">
+            <div><label>Capital ($)</label><input id="pCap" type="number" min="0" placeholder="10000"></div>
+            <div><label>Riesgo (%)</label><input id="pRiesgo" type="number" step="0.1" min="0" placeholder="1"></div>
+            <div><label>Entrada</label><input id="pEntrada" type="number" step="0.01" min="0" placeholder="0.00"></div>
+            <div><label>Stop</label><input id="pStop" type="number" step="0.01" min="0" placeholder="0.00"></div>
+          </div>
+          <div id="posOut"></div>
+        </div>
+
+        <div class="glass xcard">
+          <h3>Stop y objetivo</h3>
+          <p class="hint">Riesgo y beneficio medidos desde tu precio promedio.</p>
+          <div class="dos">
+            <div><label>Stop loss</label><input id="rStop" type="number" step="0.01" min="0" placeholder="0.00"></div>
+            <div><label>Objetivo</label><input id="rObj" type="number" step="0.01" min="0" placeholder="0.00"></div>
+          </div>
+          <div id="rrOut"></div>
+        </div>
+
+        <div class="glass xcard">
+          <h3>Guardar cálculo</h3>
+          <p class="hint">Queda en este navegador, por ticker, para retomarlo después.</p>
+          <div class="dos">
+            <div><label>Ticker</label><input id="gTicker" type="text" maxlength="8" placeholder="NVDA" style="text-transform:uppercase"></div>
+            <div><label>&nbsp;</label><button class="pbtn cool" style="width:100%;padding:10px" onclick="guardar()">Guardar</button></div>
+          </div>
+          <div id="gLista"></div>
+        </div>
+
+        <div class="glass xcard">
+          <h3>Compartir</h3>
+          <p class="hint">Para publicarlo en la comunidad.</p>
+          <div class="botones" style="margin-top:6px">
+            <button class="pbtn ghost" onclick="copiarResumen()">Copiar resumen</button>
+            <button class="pbtn cool" onclick="crearImagen()">Crear imagen</button>
+          </div>
+          <div id="shareOut"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <p class="banner">Maqueta para aprobación. Es una vista previa: todavía no está en la plataforma real.</p>
+</div>
+
+<script>
+  const COLORES = ['#7fc67f', '#66b3f5', '#c4a6f2', '#f5d36a', '#f59fb0', '#6fd6c3'];
+  const ORD = ['Primera', 'Segunda', 'Tercera', 'Cuarta', 'Quinta', 'Sexta'];
+  const ORD_ABREV = ['1ª', '2ª', '3ª', '4ª', '5ª', '6ª'];
+  const MAX = 6;
+  let compras = [{ u: 100, p: 5 }, { u: 100, p: 2 }];
+  let ultimo = null;
+  const $ = (id) => document.getElementById(id);
+  const num = (v) => { const n = parseFloat(v); return Number.isFinite(n) && n >= 0 ? n : 0; };
+  const fmt = (n) => Number(n.toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 4 });
+  const usd = (n) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const sg = (n) => (n >= 0 ? '+' : '−') + usd(Math.abs(n));
+
+  function ver(c) { $('v-op').hidden = c !== 'op'; $('v-ac').hidden = c !== 'ac'; $('t-op').classList.toggle('on', c === 'op'); $('t-ac').classList.toggle('on', c === 'ac'); }
+
+  // Se pintan solo al agregar o quitar, para no perder el foco mientras se escribe
+  function pintar() {
+    $('compras').innerHTML = compras.map((c, i) => `
+      <div class="compra">
+        <h3>${ORD[i]} compra</h3>
+        ${i >= 2 ? `<button class="quitar" title="Quitar" onclick="quitar(${i})">×</button>` : ''}
+        <label>Unidades</label>
+        <input type="number" min="0" step="1" value="${c.u || ''}" oninput="cambiar(${i},'u',this.value)">
+        <label>Precio por acción</label>
+        <input type="number" min="0" step="0.01" value="${c.p || ''}" oninput="cambiar(${i},'p',this.value)">
+        <div class="monto"><span>Monto invertido en la ${ORD_ABREV[i]} compra:</span><b id="m${i}">0</b></div>
+      </div>`).join('');
+    $('btnMas').hidden = compras.length >= MAX;
+    calcular();
+  }
+  function cambiar(i, k, v) { compras[i][k] = num(v); calcular(); }
+  function agregar() { if (compras.length < MAX) { compras.push({ u: 0, p: 0 }); pintar(); } }
+  function quitar(i) { if (compras.length > 2) { compras.splice(i, 1); pintar(); } }
+  function limpiar() { compras = [{ u: 0, p: 0 }, { u: 0, p: 0 }]; ['actual', 'fee', 'meta', 'sUn', 'sPr'].forEach(id => $(id).value = ''); pintar(); }
+
+  function calcular(destacar) {
+    compras.forEach((c, i) => { const m = $('m' + i); if (m) m.textContent = fmt(c.u * c.p); });
+    const validas = compras.map((c, i) => ({ ...c, i })).filter(c => c.u > 0 && c.p > 0);
+    const acc = validas.reduce((s, c) => s + c.u, 0);
+    const gastado = validas.reduce((s, c) => s + c.u * c.p, 0);
+    $('tUn').textContent = fmt(acc);
+    if (!acc) { $('tProm').textContent = '0'; $('tMonto').textContent = '0'; $('grafico').innerHTML = ''; $('tendencia').innerHTML = ''; ultimo = null; extras(0, 0); return; }
+    const prom = gastado / acc;
+    ultimo = { prom, acc, gastado };
+    $('tProm').textContent = fmt(prom); $('tMonto').textContent = fmt(gastado);
+    // Promedio a la baja o al alza: compara la última compra con el promedio de las anteriores
+    let t = '';
+    if (validas.length >= 2) {
+      const ult = validas[validas.length - 1], prev = validas.slice(0, -1);
+      const pa = prev.reduce((s, c) => s + c.u * c.p, 0) / prev.reduce((s, c) => s + c.u, 0);
+      const d = (ult.p / pa - 1) * 100;
+      if (ult.p < pa) t = `<span class="chip down">▼ Promediando a la baja · tu última compra está ${Math.abs(d).toFixed(1)}% bajo el promedio anterior</span>`;
+      else if (ult.p > pa) t = `<span class="chip up">▲ Promediando al alza (pirámide) · tu última compra está ${d.toFixed(1)}% sobre el promedio anterior</span>`;
+    }
+    $('tendencia').innerHTML = t;
+    $('grafico').innerHTML = `
+      <div class="llaves">${validas.map(c => `<div class="llave" style="flex:${c.u * c.p / gastado} 1 0"><span>${fmt(c.u)} unidades</span></div>`).join('')}</div>
+      <div class="barra">${validas.map(c => `<i style="flex:${c.u * c.p / gastado} 1 0;background-color:${COLORES[c.i % COLORES.length]}"><span style="position:relative;z-index:1">${fmt(c.u * c.p)}</span></i>`).join('')}</div>
+      <div class="llave base"><span>Precio promedio ${fmt(prom)}</span></div>`;
+    extras(acc, gastado, validas.length);
+    if (destacar) { $('tProm').animate([{ transform: 'scale(1.25)' }, { transform: 'scale(1)' }], { duration: 260 }); }
+  }
+
+  function extras(acc, gastado, n) {
+    const fee = num($('fee').value), actual = num($('actual').value), meta = num($('meta').value);
+    posicion();
+    if (!acc) { $('plOut').innerHTML = $('metaOut').innerHTML = $('simOut').innerHTML = $('ventaOut').innerHTML = $('rrOut').innerHTML = ''; return; }
+    const prom = gastado / acc, costo = gastado + fee * n, be = (costo + fee) / acc;
+    // Venta parcial: acciones a vender para recuperar el costo (o costo + ganancia deseada)
+    const pv = num($('vPrecio').value), gan = num($('vGan').value);
+    if (!pv) $('ventaOut').innerHTML = '';
+    else {
+      const k = Math.ceil((costo + fee + gan) / pv);
+      $('ventaOut').innerHTML = k > acc
+        ? `<div class="out warn">A ${usd(pv)} no alcanzas ni vendiendo todo (recibirías ${usd(acc * pv)}).</div>`
+        : `<div class="out">Vende <b>${k.toLocaleString('en-US')}</b> acciones a ${usd(pv)} (recibes ${usd(k * pv)}) para ${gan ? 'asegurar ' + usd(gan) + ' de ganancia' : 'recuperar lo invertido'}. Te quedan <b>${(acc - k).toLocaleString('en-US')}</b> acciones${gan ? '' : ' sin costo'}.</div>`;
+    }
+    // Stop y objetivo medidos desde el precio promedio
+    const st = num($('rStop').value), ob = num($('rObj').value);
+    if (!(st && ob)) $('rrOut').innerHTML = '';
+    else if (st >= prom) $('rrOut').innerHTML = `<div class="out warn">El stop debe estar por debajo de tu promedio (${usd(prom)}).</div>`;
+    else if (ob <= prom) $('rrOut').innerHTML = `<div class="out warn">El objetivo debe estar por encima de tu promedio (${usd(prom)}).</div>`;
+    else {
+      const riesgo = (prom - st) * acc, beneficio = (ob - prom) * acc, r = beneficio / riesgo;
+      $('rrOut').innerHTML = `<div class="out">Arriesgas <b class="neg">${usd(riesgo)}</b> para ganar <b class="pos">${usd(beneficio)}</b>.<br>Relación riesgo/beneficio: <b>1 : ${r.toFixed(2)}</b><br>Necesitas acertar al menos el <b>${(100 / (1 + r)).toFixed(0)}%</b> de las veces para no perder.</div>`;
+    }
+    $('plOut').innerHTML = actual
+      ? (() => { const pl = (actual - be) * acc, pct = pl / costo * 100;
+          return `<div class="out">Costo con comisiones: <b>${usd(costo)}</b><br>Punto de equilibrio: <b>${usd(be)}</b><br>Resultado: <b class="${pl >= 0 ? 'pos' : 'neg'}">${sg(pl)} (${pct >= 0 ? '+' : '−'}${Math.abs(pct).toFixed(2)}%)</b></div>`; })()
+      : '<div class="out">Escribe el precio actual para ver tu resultado.</div>';
+    let h = '';
+    if (meta) {
+      if (!actual) h = '<div class="out warn">Escribe el precio actual para calcularlo.</div>';
+      else if (meta >= prom) h = '<div class="out warn">Tu promedio actual ya es menor o igual a ese objetivo.</div>';
+      else if (actual >= meta) h = `<div class="out warn">Con el precio actual (${usd(actual)}) no se llega a ${usd(meta)}: el objetivo debe ser mayor que el precio actual.</div>`;
+      else { const k = Math.ceil(acc * (prom - meta) / (meta - actual));
+        h = `<div class="out">Compra <b>${k.toLocaleString('en-US')}</b> acciones a ${usd(actual)} (${usd(k * actual)}) y tu promedio será <b>${usd((gastado + k * actual) / (acc + k))}</b>.</div>`; }
+    }
+    $('metaOut').innerHTML = h;
+    const sU = num($('sUn').value), sP = num($('sPr').value);
+    $('simOut').innerHTML = (sU && sP)
+      ? `<div class="out">Nuevo promedio: <b>${usd((gastado + sU * sP) / (acc + sU))}</b> con ${(acc + sU).toLocaleString('en-US')} acciones (<b>${sg((gastado + sU * sP) / (acc + sU) - prom)}</b> por acción).</div>` : '';
+  }
+  // Tamaño de posición: no depende de las compras, solo de capital, riesgo, entrada y stop
+  function posicion() {
+    const cap = num($('pCap').value), r = num($('pRiesgo').value), en = num($('pEntrada').value), st = num($('pStop').value);
+    if (!(cap && r && en && st)) { $('posOut').innerHTML = ''; return; }
+    if (st >= en) { $('posOut').innerHTML = '<div class="out warn">El stop debe estar por debajo del precio de entrada.</div>'; return; }
+    const riesgo = cap * r / 100, n = Math.floor(riesgo / (en - st)), costo = n * en;
+    $('posOut').innerHTML = n
+      ? `<div class="out">Arriesgas <b>${usd(riesgo)}</b> (${r}% de tu capital). Compra <b>${n.toLocaleString('en-US')}</b> acciones: ${usd(costo)}, el ${(costo / cap * 100).toFixed(1)}% de tu capital.${costo > cap ? '<br><b class="neg">Ojo: eso supera tu capital.</b>' : ''}</div>`
+      : '<div class="out warn">Con ese riesgo no alcanza ni para 1 acción.</div>';
+  }
+
+  // Guardar en este navegador (localStorage), por ticker
+  const CLAVE = 'calc-activos-guardados';
+  const leer = () => { try { return JSON.parse(localStorage.getItem(CLAVE) || '[]'); } catch { return []; } };
+  const escribir = (l) => { try { localStorage.setItem(CLAVE, JSON.stringify(l)); } catch {} };
+  function guardar() {
+    if (!ultimo) { $('gLista').innerHTML = '<div class="out warn">Escribe al menos una compra para guardar.</div>'; return; }
+    const ticker = ($('gTicker').value.trim().toUpperCase()) || 'SIN TICKER';
+    const l = leer().filter(x => x.ticker !== ticker);
+    l.unshift({ ticker, fecha: new Date().toLocaleDateString('es'), compras: compras.map(c => ({ ...c })), prom: ultimo.prom, acc: ultimo.acc });
+    escribir(l.slice(0, 8)); listar();
+  }
+  function listar() {
+    const l = leer();
+    $('gLista').innerHTML = l.map((x, i) => `<div class="gitem"><b>${x.ticker}</b><span>prom. ${fmt(x.prom)} · ${fmt(x.acc)} u · ${x.fecha}</span><button onclick="cargar(${i})">Cargar</button><button class="del" onclick="borrar(${i})">×</button></div>`).join('');
+  }
+  function cargar(i) { const x = leer()[i]; if (!x) return; compras = x.compras.map(c => ({ ...c })); $('gTicker').value = x.ticker === 'SIN TICKER' ? '' : x.ticker; pintar(); }
+  function borrar(i) { const l = leer(); l.splice(i, 1); escribir(l); listar(); }
+
+  // Compartir: texto y tarjeta PNG
+  function resumen() {
+    if (!ultimo) return null;
+    const t = ($('gTicker').value.trim().toUpperCase()) || '';
+    return `📊 ${t ? t + ' · ' : ''}Mi promedio: ${usd(ultimo.prom)} | ${fmt(ultimo.acc)} acciones | Monto: ${usd(ultimo.gastado)}`;
+  }
+  function copiarResumen() {
+    const r = resumen();
+    $('shareOut').innerHTML = r ? '<div class="out">Resumen copiado.<br>' + r + '</div>' : '<div class="out warn">Escribe al menos una compra.</div>';
+    if (r && navigator.clipboard) navigator.clipboard.writeText(r).catch(() => {});
+  }
+  function crearImagen() {
+    if (!ultimo) { $('shareOut').innerHTML = '<div class="out warn">Escribe al menos una compra.</div>'; return; }
+    const c = document.createElement('canvas'); c.width = 900; c.height = 480; const g = c.getContext('2d');
+    g.fillStyle = '#060b16'; g.fillRect(0, 0, 900, 480);
+    g.fillStyle = '#101c32'; g.strokeStyle = 'rgba(255,255,255,.12)'; g.lineWidth = 2; g.beginPath(); g.roundRect(30, 30, 840, 420, 28); g.fill(); g.stroke();
+    g.fillStyle = '#8ea2bd'; g.font = '700 22px sans-serif'; g.fillText('LEGACY OPTION COMUNIDAD · Calculadora de promedio', 64, 84);
+    g.fillStyle = '#eaf1fa'; g.font = '800 54px sans-serif'; g.fillText(($('gTicker').value.trim().toUpperCase()) || 'Mi posición', 64, 160);
+    g.fillStyle = '#00e08a'; g.font = '800 92px monospace'; g.fillText(usd(ultimo.prom), 64, 270);
+    g.fillStyle = '#8ea2bd'; g.font = '700 22px sans-serif'; g.fillText('PRECIO PROMEDIO', 64, 306);
+    g.fillStyle = '#eaf1fa'; g.font = '700 34px monospace'; g.fillText(fmt(ultimo.acc) + ' acciones  ·  ' + usd(ultimo.gastado), 64, 380);
+    const w = 772; let x = 64; const bar = compras.filter(k => k.u > 0 && k.p > 0);
+    bar.forEach((k, i) => { const ww = w * (k.u * k.p / ultimo.gastado); g.fillStyle = COLORES[compras.indexOf(k) % COLORES.length]; g.fillRect(x, 410, ww, 14); x += ww; });
+    $('shareOut').innerHTML = '<div class="out">Tu imagen está lista. Mantén pulsada la imagen (o clic derecho) para guardarla.<br><img alt="Resumen de tu promedio" style="max-width:100%;border-radius:12px;margin-top:10px" src="' + c.toDataURL('image/png') + '"></div>';
+  }
+
+  ['actual', 'fee', 'meta', 'sUn', 'sPr', 'vPrecio', 'vGan', 'pCap', 'pRiesgo', 'pEntrada', 'pStop', 'rStop', 'rObj'].forEach(id => $(id).addEventListener('input', () => calcular()));
+  pintar(); listar();
+</script>
+</body>
+</html>
